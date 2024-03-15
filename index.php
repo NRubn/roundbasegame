@@ -1,7 +1,7 @@
 <?php
 
 Ziele:
-# Grid [ ]
+# Grid [X]
 # Player [ ]
 # Roundbase Movement [ ]
 # Enemy [ ]
@@ -60,5 +60,24 @@ Ziele:
         <p>Hier kannst du verschiedene Abenteuer erleben und deine Fähigkeiten verbessern.</p>
         <a href="#" class="button">Starten</a>
     </div>
+    <canvas id="gridCanvas" width="300" height="300"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gridCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Berechne die Breite und Höhe jedes Feldes
+        const cellWidth = canvas.width / 5;
+        const cellHeight = canvas.height / 5;
+
+        // Zeichne das Gridmuster
+        for (let x = 0; x < 5; x++) {
+            for (let y = 0; y < 5; y++) {
+                ctx.beginPath();
+                ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                ctx.stroke();
+            }
+        }
+    </script>
 </body>
 </html>
