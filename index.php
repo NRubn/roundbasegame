@@ -1,9 +1,10 @@
 <?php
 
-Ziele:
+/*Ziele:
 # Grid [X]
 # Player [X]
-# Roundbase Movement [ ]
+# Roundbase Movement [X]
+//NEW # Make Script extern [X]
 # Enemy [ ]
 # Attack/Block [ ]
 # GameOver / Win [ ]
@@ -12,6 +13,7 @@ Ziele:
 # Level [ ]
 # EXP [ ]
 # Future Plans [ ]
+*/
 
 ?>
 <!DOCTYPE html>
@@ -51,6 +53,9 @@ Ziele:
         .button:hover {
             background-color: #0056b3;
         }
+        .hide{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -61,42 +66,10 @@ Ziele:
         <a href="#" class="button">Starten</a>
     </div>
     <canvas id="gridCanvas" width="300" height="300"></canvas>
+    <div id="roundnumber">0</div>
+    <div id="actionpoints">2</div>
+    <div id="endround" class="hide">Ende</div>
+    <script src="resources/js/script.js"></script>
 
-    <script>
-        const canvas = document.getElementById('gridCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Berechne die Breite und Höhe jedes Feldes
-        const cellWidth = canvas.width / 5;
-        const cellHeight = canvas.height / 5;
-
-        // Lade das Hero-Bild
-        const heroImg = new Image();
-        heroImg.src = 'resources/char/hero.svg';
-
-        // Warte, bis das Bild geladen ist, bevor es gezeichnet wird
-        heroImg.onload = function() {
-            // Zeichne das Gridmuster
-            for (let x = 0; x < 5; x++) {
-                for (let y = 0; y < 5; y++) {
-                    ctx.beginPath();
-                    ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                    ctx.stroke();
-                }
-            }
-            
-            // Berechne die Größe des Bildes entsprechend der Größe eines Gridfeldes
-            const maxImgSize = Math.min(cellWidth, cellHeight);
-            const scaledWidth = Math.min(heroImg.width, maxImgSize);
-            const scaledHeight = Math.min(heroImg.height, maxImgSize);
-            
-            // Zeichne das Hero-Bild in der Mitte des Gridmusters
-            const heroX = (canvas.width - scaledWidth) / 2;
-            const heroY = (canvas.height - scaledHeight) / 2;
-            ctx.drawImage(heroImg, heroX, heroY, scaledWidth, scaledHeight);
-        };
-
-
-    </script>
 </body>
 </html>
