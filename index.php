@@ -2,7 +2,7 @@
 
 Ziele:
 # Grid [X]
-# Player [ ]
+# Player [X]
 # Roundbase Movement [ ]
 # Enemy [ ]
 # Attack/Block [ ]
@@ -70,14 +70,33 @@ Ziele:
         const cellWidth = canvas.width / 5;
         const cellHeight = canvas.height / 5;
 
-        // Zeichne das Gridmuster
-        for (let x = 0; x < 5; x++) {
-            for (let y = 0; y < 5; y++) {
-                ctx.beginPath();
-                ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                ctx.stroke();
+        // Lade das Hero-Bild
+        const heroImg = new Image();
+        heroImg.src = 'resources/char/hero.svg';
+
+        // Warte, bis das Bild geladen ist, bevor es gezeichnet wird
+        heroImg.onload = function() {
+            // Zeichne das Gridmuster
+            for (let x = 0; x < 5; x++) {
+                for (let y = 0; y < 5; y++) {
+                    ctx.beginPath();
+                    ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                    ctx.stroke();
+                }
             }
-        }
+            
+            // Berechne die Größe des Bildes entsprechend der Größe eines Gridfeldes
+            const maxImgSize = Math.min(cellWidth, cellHeight);
+            const scaledWidth = Math.min(heroImg.width, maxImgSize);
+            const scaledHeight = Math.min(heroImg.height, maxImgSize);
+            
+            // Zeichne das Hero-Bild in der Mitte des Gridmusters
+            const heroX = (canvas.width - scaledWidth) / 2;
+            const heroY = (canvas.height - scaledHeight) / 2;
+            ctx.drawImage(heroImg, heroX, heroY, scaledWidth, scaledHeight);
+        };
+
+
     </script>
 </body>
 </html>
