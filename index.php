@@ -67,10 +67,21 @@
         <a href="#" class="button">Starten</a>
     </div>
     <canvas id="gridCanvas" width="300" height="300"></canvas>
+    <div id="activehero">hero1</div>
     <div id="roundnumber">0</div>
     <div id="actionpoints">2</div>
-    <div id="endround" class="hide">Ende</div>
+    <div id="endround" class="hide"><button>Ende</button></div>
+    <script src="resources/js/gamecontroller.js"></script>
+    <script src="resources/js/character.js"></script>
     <script src="resources/js/script.js"></script>
+    <script>
 
+        // Beispiel: Erstellung von Charakteren und Hinzufügen zum Spiel
+        const hero1 = new Character("Hero 1", (canvas.width - cellWidth) / 2, (canvas.height - cellHeight) / 2, 10, 0, 5, 3);
+        const hero2 = new Character("Hero 2", (canvas.width - cellWidth) / 2, (canvas.height - cellHeight) / 2, 8, 0, 4, 4);
+        gameController.addCharacter(hero1);
+        gameController.addCharacter(hero2);
+
+    </script>
 </body>
 </html>

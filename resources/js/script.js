@@ -9,15 +9,8 @@ const cellHeight = canvas.height / 5;
 const heroImg = new Image();
 heroImg.src = 'resources/char/hero.svg';
 
-// Startposition des Hero
-let heroX = (canvas.width - cellWidth) / 2;
-let heroY = (canvas.height - cellHeight) / 2;
-
-// Aktionspunkte des Hero
-let actionPoints = 2;
-
-// Aktuelle Runde
-let roundNumber = 0;
+// Instanziere den GameController
+const gameController = new GameController();
 
 // DOM-Elemente
 const roundNumberDisplay = document.getElementById('roundnumber');
@@ -40,76 +33,69 @@ function drawGrid() {
         }
     }
     
-    // Zeichne das Hero-Bild
-    ctx.drawImage(heroImg, heroX, heroY, cellWidth, cellHeight);
+    // Zeichne die Charaktere
+    gameController.characters.forEach(character => {
+        ctx.drawImage(heroImg, character.x, character.y, cellWidth, cellHeight);
+    });
 }
 
 // Event Listener für Tastatureingaben
 document.addEventListener('keydown', function(event) {
-    if (actionPoints > 0) { // Überprüfe, ob genügend Aktionspunkte vorhanden sind
+    const currentCharacter = gameController.getNextCharacter();
+    if (currentCharacter.actionPoints > 0) {
         switch(event.key) {
             case 'ArrowLeft':
-                moveHero(-1, 0); // Bewege den Hero nach links
+                moveHero(currentCharacter, -1, 0);
                 break;
             case 'ArrowRight':
-                moveHero(1, 0); // Bewege den Hero nach rechts
+                moveHero(currentCharacter, 1, 0);
                 break;
             case 'ArrowUp':
-                moveHero(0, -1); // Bewege den Hero nach oben
+                moveHero(currentCharacter, 0, -1);
                 break;
             case 'ArrowDown':
-                moveHero(0, 1); // Bewege den Hero nach unten
+                moveHero(currentCharacter, 0, 1);
                 break;
         }
     }
 });
 
 // Funktion zum Bewegen des Hero
-function moveHero(deltaX, deltaY) {
-    // Berechne die neue Position
-    const newHeroX = heroX + deltaX * cellWidth;
-    const newHeroY = heroY + deltaY * cellHeight;
+function moveHero(character, deltaX, deltaY) {
+    const newHeroX = character.x + deltaX * cellWidth;
+    const newHeroY = character.y + deltaY * cellHeight;
 
-    // Überprüfe, ob die neue Position innerhalb des Canvas ist
     if (newHeroX >= 0 && newHeroX <= canvas.width - cellWidth &&
         newHeroY >= 0 && newHeroY <= canvas.height - cellHeight) {
-        // Aktualisiere die Position des Hero
-        heroX = newHeroX;
-        heroY = newHeroY;
+        character.x = newHeroX;
+        character.y = newHeroY;
 
-        // Verringere die Aktionspunkte um 1
-        actionPoints--;
+        character.actionPoints--;
 
-        // Aktualisiere die Anzeige der Aktionspunkte
-        actionPointsDisplay.textContent = actionPoints;
+        actionPointsDisplay.textContent = character.actionPoints;
 
-        // Lösche den vorherigen Hero und zeichne den Hero an der neuen Position
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawGrid();
     }
     
-    // Überprüfe, ob die Runde beendet ist
     if (isRoundOver()) {
-        // Zeige den "Ende"-Button an
         endRoundButton.classList.remove('hide');
     }
 }
 
 // Funktion zur Überprüfung, ob die Runde beendet ist
 function isRoundOver() {
-    return actionPoints === 0;
+    return gameController.characters.every(character => character.actionPoints === 0);
 }
 
 // Event Listener für den "Ende"-Button
 endRoundButton.addEventListener('click', function() {
-    // Aktualisiere die Aktionspunkte
-    actionPoints = 2;
-    actionPointsDisplay.textContent = actionPoints;
+    gameController.startNewRound();
+
+    // Aktualisiere die Anzeige der Rundennummer
+    roundNumberDisplay.textContent = gameController.roundNumber;
 
     // Verstecke den "Ende"-Button
     endRoundButton.classList.add('hide');
-
-    // Erhöhe die Rundennummer
-    roundNumber++;
-    roundNumberDisplay.textContent = roundNumber;
 });
+
