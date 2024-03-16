@@ -27,6 +27,7 @@ heroImg.onload = function() {
 
 // Funktion zum Zeichnen des Gridmusters und der Charaktere
 function drawGrid() {
+    console.log("drawGrid");
     // Zeichne das Gridmuster
     for (let x = 0; x < 5; x++) {
         for (let y = 0; y < 5; y++) {
@@ -38,14 +39,18 @@ function drawGrid() {
     
     // Zeichne die Charaktere
     gameController.characters.forEach(character => {
-        ctx.drawImage(heroImg, character.x, character.y, cellWidth, cellHeight);
+        console.log("draw " + character);
+        ctx.drawImage(heroImg, character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
+        console.log(heroImg, character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
     });
 }
 
 // Event Listener für Tastatureingaben
 document.addEventListener('keydown', function(event) {
-    const currentCharacter = gameController.getNextCharacter(); // Holen Sie sich den aktuellen Charakter bei jedem Tastenanschlag
-    if (currentCharacter.actionPoints > 0) {
+    console.log(event.key)
+    if (gameController.getCurrentCharacter().actionPoints > 0) {
+        console.log("actionPoints > 0");
+        const currentCharacter = gameController.getNextCharacter(); // Holen Sie sich den aktuellen Charakter bei jedem Tastenanschlag
         switch(event.key) {
             case 'ArrowLeft':
                 moveHero(currentCharacter, -1, 0);
@@ -60,22 +65,25 @@ document.addEventListener('keydown', function(event) {
                 moveHero(currentCharacter, 0, 1);
                 break;
         }
+    }else{
+    console.log("actionPoints 0");
     }
 });
 
 // Funktion zur Aktualisierung der Anzeige des aktuellen Charakters
 function displayCurrentCharacter() {
-    const currentCharacter = gameController.getNextCharacter(); // Holen Sie sich den aktuellen Charakter
+    console.log("displayCurrentCharacter");
+    const currentCharacter = gameController.getCurrentCharacter(); // Holen Sie sich den aktuellen Charakter
     activeHeroDisplay.textContent = currentCharacter.name; // Aktualisieren Sie die Anzeige
 }
 
 // Funktion zum Bewegen des Charakters
 function moveHero(character, deltaX, deltaY) {
-    const newHeroX = character.x + deltaX * cellWidth;
-    const newHeroY = character.y + deltaY * cellHeight;
+    console.log("moveHero");
+    const newHeroX = character.x + deltaX;
+    const newHeroY = character.y + deltaY;
 
-    if (newHeroX >= 0 && newHeroX <= canvas.width - cellWidth &&
-        newHeroY >= 0 && newHeroY <= canvas.height - cellHeight) {
+    if (newHeroX >= 0 && newHeroX < 5 && newHeroY >= 0 && newHeroY < 5) {
         character.x = newHeroX;
         character.y = newHeroY;
 

@@ -7,6 +7,8 @@ class GameController {
 
     // Methode zum Hinzufügen eines Charakters zum Spiel
     addCharacter(character) {
+        console.log("addCharacter");
+        console.log(character);
         this.characters.push(character);
     }
 
@@ -19,9 +21,21 @@ class GameController {
         });
     }
 
-// Methode zur Bestimmung des nächsten Charakters, der ziehen darf
+    // Methode zum Starten des Spiels
+    startGame() {
+        console.log("startGame");
+        this.startNewRound();
+        // Zeigen Sie die Rundennummer an
+        roundNumberDisplay.textContent = this.roundNumber;
+        // Zeigen Sie den aktuellen Charakter an
+        displayCurrentCharacter();
+    }
+
+    // Methode zur Bestimmung des nächsten Charakters, der ziehen darf
     getNextCharacter() {
+        console.log("getNextCharacter");
         let nextCharacter = this.characters[this.currentCharacterIndex];
+        console.log(this.currentCharacterIndex);
         this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
         while (nextCharacter.actionPoints === 0) {
             nextCharacter = this.characters[this.currentCharacterIndex];
@@ -33,8 +47,8 @@ class GameController {
         return nextCharacter;
     }
 
-    // Methode zum Abrufen des Index des aktuellen Spielers
-    getCurrentPlayerIndex() {
-        return this.currentCharacterIndex;
+    // Methode zur Rückgabe des aktuellen Charakters
+    getCurrentCharacter() {
+        return this.characters[this.currentCharacterIndex];
     }
 }
