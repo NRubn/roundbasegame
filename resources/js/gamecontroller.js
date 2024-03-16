@@ -19,10 +19,22 @@ class GameController {
         });
     }
 
-    // Methode zur Bestimmung des nächsten Charakters, der ziehen darf
+// Methode zur Bestimmung des nächsten Charakters, der ziehen darf
     getNextCharacter() {
-        const nextCharacter = this.characters[this.currentCharacterIndex];
+        let nextCharacter = this.characters[this.currentCharacterIndex];
         this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
+        while (nextCharacter.actionPoints === 0) {
+            nextCharacter = this.characters[this.currentCharacterIndex];
+            this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
+        }
+        if (this.currentCharacterIndex === 0) {
+            this.startNewRound();
+        }
         return nextCharacter;
+    }
+
+    // Methode zum Abrufen des Index des aktuellen Spielers
+    getCurrentPlayerIndex() {
+        return this.currentCharacterIndex;
     }
 }

@@ -1,3 +1,6 @@
+// Aktualisiere die Anzeige des aktuellen Helden
+const activeHeroDisplay = document.getElementById('activehero');
+
 const canvas = document.getElementById('gridCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -22,7 +25,7 @@ heroImg.onload = function() {
     drawGrid(); // Zeichne das Gridmuster und den Hero
 };
 
-// Funktion zum Zeichnen des Gridmusters und des Hero
+// Funktion zum Zeichnen des Gridmusters und der Charaktere
 function drawGrid() {
     // Zeichne das Gridmuster
     for (let x = 0; x < 5; x++) {
@@ -41,7 +44,7 @@ function drawGrid() {
 
 // Event Listener für Tastatureingaben
 document.addEventListener('keydown', function(event) {
-    const currentCharacter = gameController.getNextCharacter();
+    const currentCharacter = gameController.getNextCharacter(); // Holen Sie sich den aktuellen Charakter bei jedem Tastenanschlag
     if (currentCharacter.actionPoints > 0) {
         switch(event.key) {
             case 'ArrowLeft':
@@ -60,7 +63,13 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Funktion zum Bewegen des Hero
+// Funktion zur Aktualisierung der Anzeige des aktuellen Charakters
+function displayCurrentCharacter() {
+    const currentCharacter = gameController.getNextCharacter(); // Holen Sie sich den aktuellen Charakter
+    activeHeroDisplay.textContent = currentCharacter.name; // Aktualisieren Sie die Anzeige
+}
+
+// Funktion zum Bewegen des Charakters
 function moveHero(character, deltaX, deltaY) {
     const newHeroX = character.x + deltaX * cellWidth;
     const newHeroY = character.y + deltaY * cellHeight;
@@ -76,6 +85,7 @@ function moveHero(character, deltaX, deltaY) {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawGrid();
+        displayCurrentCharacter(); // Aktualisieren Sie die Anzeige des aktuellen Charakters
     }
     
     if (isRoundOver()) {
@@ -98,4 +108,3 @@ endRoundButton.addEventListener('click', function() {
     // Verstecke den "Ende"-Button
     endRoundButton.classList.add('hide');
 });
-

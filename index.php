@@ -6,7 +6,7 @@
 # Roundbase Movement [X]
 //NEW # Make Script extern [X]
 # Enemy [ ]
-//NEW # Roundbase - Listener (hat noch wer AP) [ ]
+//NEW # Roundbase - Listener (hat noch wer AP) [X]
 # Attack/Block [ ]
 # GameOver / Win [ ]
 # Registration [ ]
