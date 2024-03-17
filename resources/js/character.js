@@ -1,5 +1,5 @@
 class Character {
-    constructor(name, x, y, hp, xp, attack, defense) {
+    constructor(name, x, y, hp, xp, attack, defense, color) {
         this.name = name;
         this.x = x; // Position x
         this.y = y; // Position y
@@ -8,6 +8,7 @@ class Character {
         this.attack = attack; // Angriffswert
         this.defense = defense; // Verteidigungswert
         this.actionPoints = 2;
+        this.color = color;
     }
 
     // Methode zum Zurücksetzen der Aktionspunkte des Charakters

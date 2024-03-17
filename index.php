@@ -57,28 +57,45 @@
         .hide{
             display: none;
         }
+        #game{
+            display: flex;
+            justify-content: center;
+            align-content: flex-end;
+        }
+        div#infofield {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
     </style>
 </head>
 <body>
     <div id="game-container">
         <h1>Mein Browsergame</h1>
-        <p>Willkommen zum aufregenden Browsergame!</p>
-        <p>Hier kannst du verschiedene Abenteuer erleben und deine Fähigkeiten verbessern.</p>
+        <div id="game">
+            <div id="field">
+            <canvas id="gridCanvas" width="300" height="300"></canvas>
+            </div>
+            <div id="infofield">
+            <div id="activehero">hero1</div>
+            <div id="roundnumber">0</div>
+            <div id="actionpoints">2</div>
+            </div>
+        </div>
         <a href="#" class="button">Starten</a>
+        <div id="endround" class="button hide"><button>Ende</button></div>
     </div>
-    <canvas id="gridCanvas" width="300" height="300"></canvas>
-    <div id="activehero">hero1</div>
-    <div id="roundnumber">0</div>
-    <div id="actionpoints">2</div>
-    <div id="endround" class="hide"><button>Ende</button></div>
+    
+    
+    
     <script src="resources/js/gamecontroller.js"></script>
     <script src="resources/js/character.js"></script>
     <script src="resources/js/script.js"></script>
     <script>
 
         // Beispiel: Erstellung von Charakteren und Hinzufügen zum Spiel
-        const hero1 = new Character("Hero 1", 0, 0, 10, 0, 5, 3);
-        const hero2 = new Character("Hero 2", 1, 1, 8, 0, 4, 4);
+        const hero1 = new Character("Hero 1", 0, 0, 10, 0, 5, 3,"green");
+        const hero2 = new Character("Hero 2", 1, 1, 8, 0, 4, 4,"red");
         gameController.addCharacter(hero1);
         gameController.addCharacter(hero2);
         gameController.startGame();

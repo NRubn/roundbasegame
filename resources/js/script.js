@@ -39,10 +39,13 @@ function drawGrid() {
     
     // Zeichne die Charaktere
     gameController.characters.forEach(character => {
-        console.log("draw " + character);
+        // Zeichne das Rechteck mit der gewünschten Farbe
+        ctx.fillStyle = character.color; // Hier die gewünschte Farbe einfügen, z.B. "red"
+        ctx.fillRect(character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
+        
+        // Zeichne das Bild des Helden über das Rechteck
         ctx.drawImage(heroImg, character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
-        console.log(heroImg, character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
-    });
+    });    
 }
 
 // Event Listener für Tastatureingaben
