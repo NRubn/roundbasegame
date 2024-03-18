@@ -5,6 +5,8 @@
 # Player [X]
 # Roundbase Movement [X]
 //NEW # Make Script extern [X]
+# Collusion [ ]
+# Char Status [ ]
 # Enemy [ ]
 //NEW # Roundbase - Listener (hat noch wer AP) [X]
 # Attack/Block [ ]
@@ -94,10 +96,12 @@
     <script>
 
         // Beispiel: Erstellung von Charakteren und Hinzufügen zum Spiel
-        const hero1 = new Character("Hero 1", 0, 0, 10, 0, 5, 3,"green");
-        const hero2 = new Character("Hero 2", 1, 1, 8, 0, 4, 4,"red");
+        const hero1 = new Character("Green Hero 1", 0, 0, 10, 0, 5, 3,"green");
+        const hero2 = new Character("Red Hero 2", 1, 1, 8, 0, 4, 4,"red");
+        const hero3 = new Character("Blue Bob", 1, 2, 8, 0, 4, 4,"blue");
         gameController.addCharacter(hero1);
         gameController.addCharacter(hero2);
+        gameController.addCharacter(hero3);
         gameController.startGame();
     </script>
 </body>

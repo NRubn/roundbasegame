@@ -41,37 +41,70 @@ function drawGrid() {
     gameController.characters.forEach(character => {
         // Zeichne das Rechteck mit der gewünschten Farbe
         ctx.fillStyle = character.color; // Hier die gewünschte Farbe einfügen, z.B. "red"
-        ctx.fillRect(character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
+        ctx.fillRect(character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
         
         // Zeichne das Bild des Helden über das Rechteck
-        ctx.drawImage(heroImg, character.x * cellWidth, character.y * cellHeight, cellWidth, cellHeight);
-    });    
+        ctx.drawImage(heroImg, character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
+    });   
+    
+    // Aktualisiere die Anzeige der Rundennummer
+    roundNumberDisplay.textContent = gameController.roundNumber;
+    displayCurrentCharacter();
 }
 
 // Event Listener für Tastatureingaben
 document.addEventListener('keydown', function(event) {
-    console.log(event.key)
-    if (gameController.getCurrentCharacter().actionPoints > 0) {
-        console.log("actionPoints > 0");
-        const currentCharacter = gameController.getNextCharacter(); // Holen Sie sich den aktuellen Charakter bei jedem Tastenanschlag
+    const currentCharacter = gameController.getCurrentCharacter(); // Holen Sie sich den aktuellen Charakter bei jedem Tastenanschlag
+    const characterPosition = currentCharacter.position;
+    
+    if (currentCharacter.actionPoints > 0) {
+        let deltaX = 0;
+        let deltaY = 0;
+
         switch(event.key) {
             case 'ArrowLeft':
-                moveHero(currentCharacter, -1, 0);
+                deltaX = -1;
                 break;
             case 'ArrowRight':
-                moveHero(currentCharacter, 1, 0);
+                deltaX = 1;
                 break;
             case 'ArrowUp':
-                moveHero(currentCharacter, 0, -1);
+                deltaY = -1;
                 break;
             case 'ArrowDown':
-                moveHero(currentCharacter, 0, 1);
+                deltaY = 1;
                 break;
         }
-    }else{
-    console.log("actionPoints 0");
+
+        const newPosX = characterPosition[0] + deltaX;
+        const newPosY = characterPosition[1] + deltaY;
+
+        // Überprüfen, ob das Zielfeld gültig ist
+        if (isValidMove(newPosX, newPosY)) {
+            moveHero(currentCharacter, deltaX, deltaY);
+        }
+    } else {
+        console.log("actionPoints 0");
+        gameController.getNextCharacter();
+        displayCurrentCharacter();
     }
 });
+
+// Funktion zur Überprüfung, ob das Zielfeld gültig ist
+function isValidMove(newX, newY) {
+    // Überprüfen, ob das Zielfeld innerhalb der Grenzen des Spielfelds liegt
+    if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5) {
+        // Überprüfen, ob das Zielfeld ein Hindernis ist oder von einem anderen Charakter besetzt ist
+        for (const character of gameController.characters) {
+            const [charX, charY] = character.position;
+            if (charX === newX && charY === newY) {
+                return false; // Zielfeld ist von einem anderen Charakter besetzt
+            }
+        }
+        return true; // Zielfeld ist gültig
+    }
+    return false; // Zielfeld liegt außerhalb des Spielfelds
+}
 
 // Funktion zur Aktualisierung der Anzeige des aktuellen Charakters
 function displayCurrentCharacter() {
@@ -82,13 +115,13 @@ function displayCurrentCharacter() {
 
 // Funktion zum Bewegen des Charakters
 function moveHero(character, deltaX, deltaY) {
-    console.log("moveHero");
-    const newHeroX = character.x + deltaX;
-    const newHeroY = character.y + deltaY;
+    const newHeroX = character.position[0] + deltaX;
+    const newHeroY = character.position[1] + deltaY;
 
-    if (newHeroX >= 0 && newHeroX < 5 && newHeroY >= 0 && newHeroY < 5) {
-        character.x = newHeroX;
-        character.y = newHeroY;
+    // Überprüfen, ob das Zielfeld gültig ist und frei von Hindernissen und anderen Charakteren ist
+    if (isValidMove(newHeroX, newHeroY)) {
+        character.position[0] = newHeroX;
+        character.position[1] = newHeroY;
 
         character.actionPoints--;
 
@@ -96,12 +129,12 @@ function moveHero(character, deltaX, deltaY) {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawGrid();
-        displayCurrentCharacter(); // Aktualisieren Sie die Anzeige des aktuellen Charakters
     }
     
     if (isRoundOver()) {
         endRoundButton.classList.remove('hide');
     }
+    
 }
 
 // Funktion zur Überprüfung, ob die Runde beendet ist

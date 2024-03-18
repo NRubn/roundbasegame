@@ -3,6 +3,7 @@ class GameController {
         this.roundNumber = 0;
         this.characters = []; // Array zur Speicherung der Charaktere
         this.currentCharacterIndex = 0; // Index des aktuellen Charakters
+        this.characterCoordinates = []; // Array zur Speicherung der Koordinaten der Charaktere
     }
 
     // Methode zum Hinzufügen eines Charakters zum Spiel
@@ -10,6 +11,7 @@ class GameController {
         console.log("addCharacter");
         console.log(character);
         this.characters.push(character);
+        this.characterCoordinates.push(character.position); // Speichere die Koordinaten des Charakters
     }
 
     // Methode zum Starten einer neuen Runde
@@ -34,21 +36,42 @@ class GameController {
     // Methode zur Bestimmung des nächsten Charakters, der ziehen darf
     getNextCharacter() {
         console.log("getNextCharacter");
-        let nextCharacter = this.characters[this.currentCharacterIndex];
-        console.log(this.currentCharacterIndex);
-        this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
-        while (nextCharacter.actionPoints === 0) {
-            nextCharacter = this.characters[this.currentCharacterIndex];
-            this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
+        let nextCharacterIndex = this.currentCharacterIndex;
+        let counter = 0; // Zähler für die Anzahl der durchlaufenden Charaktere
+        do {
+            nextCharacterIndex = (nextCharacterIndex + 1) % this.characters.length;
+            counter++;
+        } while (this.characters[nextCharacterIndex].actionPoints === 0 && counter < this.characters.length);
+
+        if (counter === this.characters.length) {
+            this.startNewRound(); // Starte eine neue Runde, wenn kein Charakter mehr Aktionspunkte hat
+            nextCharacterIndex = 0; // Setze den Index auf den ersten Charakter in der neuen Runde
         }
-        if (this.currentCharacterIndex === 0) {
-            this.startNewRound();
-        }
-        return nextCharacter;
+
+        this.currentCharacterIndex = nextCharacterIndex;
+        return this.characters[this.currentCharacterIndex];
     }
 
     // Methode zur Rückgabe des aktuellen Charakters
     getCurrentCharacter() {
         return this.characters[this.currentCharacterIndex];
+    }
+
+    // Methode zur Rückgabe aller Koordinaten der Charaktere
+    getAllCharacterCoordinates() {
+        const occupiedCoordinates = [];
+        this.characters.forEach(character => {
+            occupiedCoordinates.push(character.position);
+        });
+        return occupiedCoordinates;
+    }
+
+    // Methode zur Berechnung der Gesamtaktionen aller Charaktere
+    getTotalActionPoints() {
+        let totalActionPoints = 0;
+        this.characters.forEach(character => {
+            totalActionPoints += character.actionPoints;
+        });
+        return totalActionPoints;
     }
 }
