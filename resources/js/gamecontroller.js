@@ -84,6 +84,7 @@ class GameController {
     }
 
     // Methode zur Überprüfung, ob das Zielfeld gültig ist
+    // Ist doppelt, auch in field enthalten.
     isValidMove(newX, newY) {
         // Überprüfen, ob das Zielfeld innerhalb der Grenzen des Spielfelds liegt
         if (newX >= 0 && newX < this.field.xfields && newY >= 0 && newY < this.field.yfields) {
@@ -112,9 +113,12 @@ class GameController {
             character.actionPoints--;
 
             //actionPointsDisplay.textContent = character.actionPoints;
-            const ctx = this.field.ctx;
-            ctx.clearRect(0, 0, field.canvas.width, field.canvas.height);
+            this.field.clearCanvas();
             this.drawGrid();
+
+            if(this.getTotalActionPoints() === 0){
+                this.startNewRound();
+            }
         }
     }
 }

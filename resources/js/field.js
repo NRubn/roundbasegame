@@ -8,7 +8,12 @@ class Field {
         this.cellHeight = this.canvas.height / yfields;
     }
 
-    // Methode zur Überprüfung, ob das Zielfeld gültig ist
+    // Methode zum Löschen des Canvas-Bereichs
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    // Methode zur Überprüfung, ob das Zielfeld gültig ist -> Doppelt vorhanden kann einmal weg
     isValidMove(newX, newY, characters) {
         // Überprüfen, ob das Zielfeld innerhalb der Grenzen des Spielfelds liegt
         const withinXBounds = newX >= 0 && newX < this.xfields;
