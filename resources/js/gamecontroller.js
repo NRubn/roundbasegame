@@ -1,18 +1,22 @@
 class GameController {
-    constructor() {
+    constructor(field, roundNumberDisplay, displayCurrentCharacter) {
+        this.field = new Field(15, 15);
         this.roundNumber = 0;
-        this.characters = []; // Array zur Speicherung der Charaktere
-        this.currentCharacterIndex = 0; // Index des aktuellen Charakters
-        this.characterCoordinates = []; // Array zur Speicherung der Koordinaten der Charaktere
+        this.characters = [];
+        this.currentCharacterIndex = 0;
+        this.roundNumberDisplay = roundNumberDisplay; // Rundenanzeige als Parameter übergeben
+        this.displayCurrentCharacter = displayCurrentCharacter; // Methode zur Anzeige des aktuellen Charakters als Parameter übergeben
     }
 
+    // Andere Methoden wie addCharacter(), startNewRound(), getNextCharacter(), getCurrentCharacter(), getAllCharacterCoordinates(), getTotalActionPoints() bleiben unverändert...
     // Methode zum Hinzufügen eines Charakters zum Spiel
     addCharacter(character) {
-        console.log("addCharacter");
-        console.log(character);
         this.characters.push(character);
-        this.characterCoordinates.push(character.position); // Speichere die Koordinaten des Charakters
     }
+
+    startGame(){
+        this.drawGrid();
+    };
 
     // Methode zum Starten einer neuen Runde
     startNewRound() {
@@ -22,41 +26,16 @@ class GameController {
             character.resetActionPoints(); // Setze die Aktionspunkte jedes Charakters zurück
         });
     }
-
-    // Methode zum Starten des Spiels
-    startGame() {
-        console.log("startGame");
-        this.startNewRound();
-        // Zeigen Sie die Rundennummer an
-        roundNumberDisplay.textContent = this.roundNumber;
-        // Zeigen Sie den aktuellen Charakter an
-        displayCurrentCharacter();
-    }
-
     // Methode zur Bestimmung des nächsten Charakters, der ziehen darf
     getNextCharacter() {
-        console.log("getNextCharacter");
-        let nextCharacterIndex = this.currentCharacterIndex;
-        let counter = 0; // Zähler für die Anzahl der durchlaufenden Charaktere
-        do {
-            nextCharacterIndex = (nextCharacterIndex + 1) % this.characters.length;
-            counter++;
-        } while (this.characters[nextCharacterIndex].actionPoints === 0 && counter < this.characters.length);
-
-        if (counter === this.characters.length) {
-            this.startNewRound(); // Starte eine neue Runde, wenn kein Charakter mehr Aktionspunkte hat
-            nextCharacterIndex = 0; // Setze den Index auf den ersten Charakter in der neuen Runde
-        }
-
-        this.currentCharacterIndex = nextCharacterIndex;
-        return this.characters[this.currentCharacterIndex];
+        const nextCharacter = this.characters[this.currentCharacterIndex];
+        this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
+        return nextCharacter;
     }
-
     // Methode zur Rückgabe des aktuellen Charakters
     getCurrentCharacter() {
         return this.characters[this.currentCharacterIndex];
     }
-
     // Methode zur Rückgabe aller Koordinaten der Charaktere
     getAllCharacterCoordinates() {
         const occupiedCoordinates = [];
@@ -65,7 +44,6 @@ class GameController {
         });
         return occupiedCoordinates;
     }
-
     // Methode zur Berechnung der Gesamtaktionen aller Charaktere
     getTotalActionPoints() {
         let totalActionPoints = 0;
@@ -73,5 +51,70 @@ class GameController {
             totalActionPoints += character.actionPoints;
         });
         return totalActionPoints;
+    }
+    
+    // Funktion zum Zeichnen des Gridmusters und der Charaktere
+    drawGrid() {
+        const ctx = this.field.ctx;
+        const cellWidth = this.field.cellWidth;
+        const cellHeight = this.field.cellHeight;
+
+        console.log("drawGrid");
+        for (let x = 0; x < this.field.xfields; x++) {
+            for (let y = 0; y < this.field.yfields; y++) {
+                ctx.beginPath();
+                ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                ctx.stroke();
+            }
+        }
+
+        this.characters.forEach(character => {
+            ctx.fillStyle = character.color; // Hier die gewünschte Farbe einfügen, z.B. "red"
+            // Zeichne das Rechteck mit der gewünschten Farbe
+            ctx.fillRect(character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
+            if (character.heroImg.complete) {
+                
+                // Zeichne das Bild des Helden über das Rechteck
+                ctx.drawImage(character.heroImg, character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
+            }
+        });
+
+        roundNumberDisplay.textContent = this.roundNumber;
+        displayCurrentCharacter();
+    }
+
+    // Methode zur Überprüfung, ob das Zielfeld gültig ist
+    isValidMove(newX, newY) {
+        // Überprüfen, ob das Zielfeld innerhalb der Grenzen des Spielfelds liegt
+        if (newX >= 0 && newX < this.field.xfields && newY >= 0 && newY < this.field.yfields) {
+            // Überprüfen, ob das Zielfeld ein Hindernis ist oder von einem anderen Charakter besetzt ist
+            for (const character of this.characters) {
+                const [charX, charY] = character.position;
+                if (charX === newX && charY === newY) {
+                    return false; // Zielfeld ist von einem anderen Charakter besetzt
+                }
+            }
+            return true; // Zielfeld ist gültig
+        }
+        return false; // Zielfeld liegt außerhalb des Spielfelds
+    }
+
+    // Funktion zum Bewegen des Charakters
+    moveHero(character, deltaX, deltaY) {
+        const newHeroX = character.position[0] + deltaX;
+        const newHeroY = character.position[1] + deltaY;
+
+        // Überprüfen, ob das Zielfeld gültig ist und frei von Hindernissen und anderen Charakteren ist
+        if (this.isValidMove(newHeroX, newHeroY)) {
+            character.position[0] = newHeroX;
+            character.position[1] = newHeroY;
+
+            character.actionPoints--;
+
+            //actionPointsDisplay.textContent = character.actionPoints;
+            const ctx = this.field.ctx;
+            ctx.clearRect(0, 0, field.canvas.width, field.canvas.height);
+            this.drawGrid();
+        }
     }
 }

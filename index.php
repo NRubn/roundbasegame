@@ -76,7 +76,7 @@
         <h1>Mein Browsergame</h1>
         <div id="game">
             <div id="field">
-            <canvas id="gridCanvas" width="300" height="300"></canvas>
+            <canvas id="gridCanvas" width="500" height="500"></canvas>
             </div>
             <div id="infofield">
             <div id="activehero">hero1</div>
@@ -92,17 +92,11 @@
     
     <script src="resources/js/gamecontroller.js"></script>
     <script src="resources/js/character.js"></script>
+    <script src="resources/js/field.js"></script>
+    <script src="resources/js/resource.js"></script>
     <script src="resources/js/script.js"></script>
     <script>
-
-        // Beispiel: Erstellung von Charakteren und Hinzufügen zum Spiel
-        const hero1 = new Character("Green Hero 1", 0, 0, 10, 0, 5, 3,"green");
-        const hero2 = new Character("Red Hero 2", 1, 1, 8, 0, 4, 4,"red");
-        const hero3 = new Character("Blue Bob", 1, 2, 8, 0, 4, 4,"blue");
-        gameController.addCharacter(hero1);
-        gameController.addCharacter(hero2);
-        gameController.addCharacter(hero3);
-        gameController.startGame();
+        console.log("AAAAHHH ES GEHT LOS");
     </script>
 </body>
 </html>

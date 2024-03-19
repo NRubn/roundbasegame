@@ -1,5 +1,5 @@
 class Character {
-    constructor(name, x, y, hp, xp, attack, defense, color) {
+    constructor(name, x, y, hp, xp, attack, defense, color, imagePath) {
         this.name = name;
         this.position = [x, y]; // Position als Array [x, y]
         this.hp = hp; // Lebenspunkte
@@ -9,6 +9,9 @@ class Character {
         this.actionPoints = 2;
         this.color = color;
         this.actions = ['move', 'attack', 'wait'];
+        this.imagePath = imagePath; // Bildpfad des Charakter
+        this.heroImg = new Image();
+        this.heroImg.src = imagePath; // Laden Sie das Bild des Charakters
     }
 
     // Methode zum Zurücksetzen der Aktionspunkte des Charakters
