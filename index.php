@@ -6,7 +6,7 @@
 # Roundbase Movement [X]
 //NEW # Make Script extern [X]
 # Collusion [X]
-# Char Status [ ]
+# Char Status [X]
 # Enemy [ ]
 //NEW # Roundbase - Listener (hat noch wer AP) [X]
 # Attack/Block [ ]
@@ -68,6 +68,12 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+        }
+        .stats {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 5px;
         }
     </style>
 </head>

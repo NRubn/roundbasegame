@@ -13,6 +13,7 @@ const gameController = new GameController(roundNumberDisplay,activeherostatsCont
 const hero1 = new Character("Green Hero 1", 0, 0, 24, 0, 5, 3,"green", "resources/char/hero.svg");
 const hero2 = new Character("Red Hero 2", 1, 1, 19, 0, 4, 4,"red", "resources/char/person-hiking-solid.svg");
 const hero3 = new Character("Blue Bob", 1, 2, 20, 0, 4, 4,"blue", "resources/char/hero.svg");
+hero3.addAction('shoot');
 gameController.addCharacter(hero1);
 gameController.addCharacter(hero2);
 gameController.addCharacter(hero3);

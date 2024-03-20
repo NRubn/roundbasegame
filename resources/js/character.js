@@ -28,4 +28,24 @@ class Character {
     getAllValues() {
         return [this.name, this.position[0], this.position[1], this.hp, this.xp, this.attack, this.defense, this.actionPoints, this.color];
     }
+
+    // Methode zum Hinzufügen einer Aktion
+    addAction(action) {
+        // Überprüfen, ob die Aktion bereits vorhanden ist
+        if (!this.actions.includes(action)) {
+            // Aktion hinzufügen
+            this.actions.push(action);
+        }
+    }
+
+    // Methode zum Entfernen einer Aktion
+    removeAction(action) {
+        // Index der Aktion in this.actions finden
+        const index = this.actions.indexOf(action);
+        // Überprüfen, ob die Aktion vorhanden ist
+        if (index !== -1) {
+            // Aktion aus this.actions entfernen
+            this.actions.splice(index, 1);
+        }
+    }
 }

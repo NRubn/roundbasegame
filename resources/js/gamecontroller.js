@@ -137,19 +137,27 @@ class GameController {
         const currentCharacterStats = this.getCurrentCharacter();
 
         console.log(currentCharacterStats);
+
+        let actionsHTML = '<div id="actions">';
+
+        currentCharacterStats.actions.forEach(action => {
+            actionsHTML += `
+                <div class="${action}" data-type="${action}"><button class="button">${action}</button></div>
+            `;
+        });
+
+        actionsHTML += '</div>';
         // Erstellen des HTML-Gerüsts für den aktuellen Charakter
         const characterStatsHTML = `
             <div id="activehero">${currentCharacterStats.name}</div>
-            <div id="actionpoints">${currentCharacterStats.actionPoints}</div>
-            <div id="hp">${currentCharacterStats.hp}</div>
-            <div id="xp">${currentCharacterStats.xp}</div>
-            <div id="attack">${currentCharacterStats.attack}</div>
-            <div id="defense">${currentCharacterStats.defense}</div>
-            <div id="actions">
-                <div class="move" data-type="move"><button class="button">move</button></div>
-                <div class="action" data-type="action"><button class="button">attack</button></div>
-                <div class="wait" data-type="wait"><button class="button">wait</button></div>
+            <div class="stats">
+                <div id="actionpoints">AP ${currentCharacterStats.actionPoints}</div>
+                <div id="hp"> HP ${currentCharacterStats.hp}</div>
+                <div id="xp"> XP ${currentCharacterStats.xp}</div>
+                <div id="attack"> AT ${currentCharacterStats.attack}</div>
+                <div id="defense"> DE ${currentCharacterStats.defense}</div>
             </div>
+            ${actionsHTML}
         `;
 
         // Elemente einfügen
