@@ -6,6 +6,7 @@ class Field {
         this.ctx = this.canvas.getContext('2d');
         this.cellWidth = this.canvas.width / xfields;
         this.cellHeight = this.canvas.height / yfields;
+        this.obstacles = [];
     }
 
     // Methode zum Löschen des Canvas-Bereichs
@@ -30,5 +31,28 @@ class Field {
             return true; // Zielfeld ist gültig
         }
         return false; // Zielfeld liegt außerhalb des Spielfelds
+    }
+
+    // Methode zum Hinzufügen eines Hindernisses an eine bestimmte Position
+    addObstacle(x, y) {
+        this.obstacles.push([x, y]);
+    }
+
+    // Methode zum Zeichnen aller Hindernisse im Spielfeld
+    drawObstacles() {
+        this.obstacles.forEach(obstacle => {
+            const [x, y] = obstacle;
+            this.ctx.fillStyle = 'gray'; // Farbe der Hindernisse
+            this.ctx.fillRect(x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight);
+        });
+    }
+
+    // Methode zum Löschen aller Hindernisse im Spielfeld
+    clearObstacles() {
+        this.obstacles = [];
+    }
+
+    addObstacle(x, y) {
+        this.obstacles.push([x, y]);
     }
 }

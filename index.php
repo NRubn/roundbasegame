@@ -5,7 +5,7 @@
 # Player [X]
 # Roundbase Movement [X]
 //NEW # Make Script extern [X]
-# Collusion [ ]
+# Collusion [X]
 # Char Status [ ]
 # Enemy [ ]
 //NEW # Roundbase - Listener (hat noch wer AP) [X]

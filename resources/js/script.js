@@ -9,16 +9,26 @@ const gameController = new GameController();
 
 // Beispiel: Erstellung von Charakteren und Hinzufügen zum Spiel
 const hero1 = new Character("Green Hero 1", 0, 0, 10, 0, 5, 3,"green", "resources/char/hero.svg");
-const hero2 = new Character("Red Hero 2", 1, 1, 8, 0, 4, 4,"red", "resources/char/hero.svg");
+const hero2 = new Character("Red Hero 2", 1, 1, 8, 0, 4, 4,"red", "resources/char/person-hiking-solid.svg");
 const hero3 = new Character("Blue Bob", 1, 2, 8, 0, 4, 4,"blue", "resources/char/hero.svg");
 gameController.addCharacter(hero1);
 gameController.addCharacter(hero2);
 gameController.addCharacter(hero3);
+gameController.field.addObstacle(8, 6);
+gameController.field.addObstacle(7, 6);
+gameController.field.addObstacle(6, 6);
+gameController.field.addObstacle(6, 7);
+gameController.field.addObstacle(6, 8);
+gameController.field.addObstacle(6, 10);
+gameController.field.addObstacle(6, 11);
+gameController.field.addObstacle(6, 12);
+gameController.field.addObstacle(7, 12);
 gameController.startGame();
 
 // Funktion zum Zeichnen des Gridmusters und der Charaktere
 function drawGrid() {
     gameController.drawGrid();
+    displayCurrentCharacter();
 }
 
 // Event Listener für Tastatureingaben
@@ -50,6 +60,10 @@ document.addEventListener('keydown', function(event) {
 
         if (gameController.isValidMove(newPosX, newPosY)) {
             gameController.moveHero(currentCharacter, deltaX, deltaY);
+            if (currentCharacter.actionPoints == 0) {
+                gameController.getNextCharacter();
+                displayCurrentCharacter();
+            }
         }
     } else {
         console.log("actionPoints 0");

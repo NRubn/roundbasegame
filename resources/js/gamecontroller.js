@@ -16,6 +16,7 @@ class GameController {
 
     startGame(){
         this.drawGrid();
+        this.field.drawObstacles();
     };
 
     // Methode zum Starten einer neuen Runde
@@ -23,7 +24,7 @@ class GameController {
         this.roundNumber++;
         this.currentCharacterIndex = 0; // Setze den Index des aktuellen Charakters zurück
         this.characters.forEach(character => {
-            character.resetActionPoints(); // Setze die Aktionspunkte jedes Charakters zurück
+            character.resetActionPoints();
         });
     }
     // Methode zur Bestimmung des nächsten Charakters, der ziehen darf
@@ -77,6 +78,7 @@ class GameController {
                 // Zeichne das Bild des Helden über das Rechteck
                 ctx.drawImage(character.heroImg, character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
             }
+            this.field.drawObstacles(); 
         });
 
         roundNumberDisplay.textContent = this.roundNumber;
@@ -84,22 +86,27 @@ class GameController {
     }
 
     // Methode zur Überprüfung, ob das Zielfeld gültig ist
-    // Ist doppelt, auch in field enthalten.
     isValidMove(newX, newY) {
         // Überprüfen, ob das Zielfeld innerhalb der Grenzen des Spielfelds liegt
         if (newX >= 0 && newX < this.field.xfields && newY >= 0 && newY < this.field.yfields) {
-            // Überprüfen, ob das Zielfeld ein Hindernis ist oder von einem anderen Charakter besetzt ist
+            // Überprüfen, ob das Zielfeld von einem anderen Charakter besetzt ist
             for (const character of this.characters) {
                 const [charX, charY] = character.position;
                 if (charX === newX && charY === newY) {
                     return false; // Zielfeld ist von einem anderen Charakter besetzt
                 }
             }
+            // Überprüfen, ob das Zielfeld von einem Hindernis besetzt ist
+            for (const obstacle of this.field.obstacles) {
+                const [obsX, obsY] = obstacle;
+                if (obsX === newX && obsY === newY) {
+                    return false; // Zielfeld ist von einem Hindernis besetzt
+                }
+            }
             return true; // Zielfeld ist gültig
         }
         return false; // Zielfeld liegt außerhalb des Spielfelds
     }
-
     // Funktion zum Bewegen des Charakters
     moveHero(character, deltaX, deltaY) {
         const newHeroX = character.position[0] + deltaX;
