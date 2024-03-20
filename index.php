@@ -79,9 +79,23 @@
             <canvas id="gridCanvas" width="500" height="500"></canvas>
             </div>
             <div id="infofield">
-            <div id="activehero">hero1</div>
             <div id="roundnumber">0</div>
-            <div id="actionpoints">2</div>
+            
+            <div id="activeherostats">
+                <div id="activehero">hero1</div>
+                <div id="actionpoints">__</div>
+                <div id="hp">__</div>
+                <div id="xp">__</div>
+                <div id="attack">__</div>
+                <div id="defense">__</div>
+                <div id="actions">
+                    <div class="move" data-type="move"><button class="button">move</button></div>
+                    <div class="action" data-type="action"><button class="button">attack</button></div>
+                    <div class="wait" data-type="wait"><button class="button">wait</button></div>
+                </div>
+            </div>
+            
+            
             </div>
         </div>
         <a href="#" class="button">Starten</a>

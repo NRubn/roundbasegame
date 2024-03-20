@@ -1,5 +1,5 @@
 class GameController {
-    constructor(field, roundNumberDisplay, displayCurrentCharacter) {
+    constructor(roundNumberDisplay, displayCurrentCharacter) {
         this.field = new Field(15, 15);
         this.roundNumber = 0;
         this.characters = [];
@@ -21,8 +21,10 @@ class GameController {
 
     // Methode zum Starten einer neuen Runde
     startNewRound() {
+        
         this.roundNumber++;
         this.currentCharacterIndex = 0; // Setze den Index des aktuellen Charakters zurück
+        this.displayCurrentCharacterStats();
         this.characters.forEach(character => {
             character.resetActionPoints();
         });
@@ -31,6 +33,7 @@ class GameController {
     getNextCharacter() {
         const nextCharacter = this.characters[this.currentCharacterIndex];
         this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
+        this.displayCurrentCharacterStats();
         return nextCharacter;
     }
     // Methode zur Rückgabe des aktuellen Charakters
@@ -56,6 +59,7 @@ class GameController {
     
     // Funktion zum Zeichnen des Gridmusters und der Charaktere
     drawGrid() {
+        
         const ctx = this.field.ctx;
         const cellWidth = this.field.cellWidth;
         const cellHeight = this.field.cellHeight;
@@ -81,8 +85,8 @@ class GameController {
             this.field.drawObstacles(); 
         });
 
-        roundNumberDisplay.textContent = this.roundNumber;
-        displayCurrentCharacter();
+        this.roundNumberDisplay.textContent = this.roundNumber;
+        
     }
 
     // Methode zur Überprüfung, ob das Zielfeld gültig ist
@@ -127,5 +131,28 @@ class GameController {
                 this.startNewRound();
             }
         }
+    }
+
+    displayCurrentCharacterStats() {
+        const currentCharacterStats = this.getCurrentCharacter();
+
+        console.log(currentCharacterStats);
+        // Erstellen des HTML-Gerüsts für den aktuellen Charakter
+        const characterStatsHTML = `
+            <div id="activehero">${currentCharacterStats.name}</div>
+            <div id="actionpoints">${currentCharacterStats.actionPoints}</div>
+            <div id="hp">${currentCharacterStats.hp}</div>
+            <div id="xp">${currentCharacterStats.xp}</div>
+            <div id="attack">${currentCharacterStats.attack}</div>
+            <div id="defense">${currentCharacterStats.defense}</div>
+            <div id="actions">
+                <div class="move" data-type="move"><button class="button">move</button></div>
+                <div class="action" data-type="action"><button class="button">attack</button></div>
+                <div class="wait" data-type="wait"><button class="button">wait</button></div>
+            </div>
+        `;
+
+        // Elemente einfügen
+        this.displayCurrentCharacter.innerHTML = characterStatsHTML;
     }
 }
