@@ -16,7 +16,6 @@ class GameController {
 
     startGame(){
         this.drawGrid();
-        this.field.drawObstacles();
     };
 
     // Methode zum Starten einer neuen Runde
@@ -59,35 +58,42 @@ class GameController {
     
     // Funktion zum Zeichnen des Gridmusters und der Charaktere
     drawGrid() {
-        
         const ctx = this.field.ctx;
         const cellWidth = this.field.cellWidth;
         const cellHeight = this.field.cellHeight;
-
-        console.log("drawGrid");
+        const activeCharacter = this.getCurrentCharacter(); // Aktuellen Charakter abrufen
+    
         for (let x = 0; x < this.field.xfields; x++) {
             for (let y = 0; y < this.field.yfields; y++) {
                 ctx.beginPath();
                 ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                ctx.fillStyle = 'white'; // Felder weiß füllen
+                ctx.strokeStyle = 'black'; // Rand schwarz
+                ctx.lineWidth = 1; // Normale Linienbreite
+                ctx.fill();
                 ctx.stroke();
             }
         }
-
+    
         this.characters.forEach(character => {
-            ctx.fillStyle = character.color; // Hier die gewünschte Farbe einfügen, z.B. "red"
-            // Zeichne das Rechteck mit der gewünschten Farbe
+            ctx.fillStyle = character.color;
             ctx.fillRect(character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
             if (character.heroImg.complete) {
-                
-                // Zeichne das Bild des Helden über das Rechteck
                 ctx.drawImage(character.heroImg, character.position[0] * cellWidth, character.position[1] * cellHeight, cellWidth, cellHeight);
             }
-            this.field.drawObstacles(); 
         });
-
+    
+        // Überprüfen, ob der aktive Charakter vorhanden ist
+        if (activeCharacter) {
+            ctx.strokeStyle = 'yellow'; // Gelber Rand
+            ctx.lineWidth = 3; // Dicke des Randes
+            ctx.strokeRect(activeCharacter.position[0] * cellWidth, activeCharacter.position[1] * cellHeight, cellWidth, cellHeight);
+        }
+    
         this.roundNumberDisplay.textContent = this.roundNumber;
-        
+        this.field.drawObstacles();
     }
+    
 
     // Methode zur Überprüfung, ob das Zielfeld gültig ist
     isValidMove(newX, newY) {
@@ -124,12 +130,14 @@ class GameController {
             character.actionPoints--;
 
             //actionPointsDisplay.textContent = character.actionPoints;
-            this.field.clearCanvas();
-            this.drawGrid();
+
 
             if(this.getTotalActionPoints() === 0){
                 this.startNewRound();
             }
+
+            this.field.clearCanvas();
+            this.drawGrid();
         }
     }
 
@@ -162,5 +170,6 @@ class GameController {
 
         // Elemente einfügen
         this.displayCurrentCharacter.innerHTML = characterStatsHTML;
+        this.drawGrid();
     }
 }
