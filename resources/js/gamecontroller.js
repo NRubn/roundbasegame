@@ -3,6 +3,7 @@ class GameController {
         this.field = new Field(15, 15);
         this.roundNumber = 0;
         this.characters = [];
+        this.teams = [];
         this.currentCharacterIndex = 0;
         this.roundNumberDisplay = roundNumberDisplay; // Rundenanzeige als Parameter übergeben
         this.displayCurrentCharacter = displayCurrentCharacter; // Methode zur Anzeige des aktuellen Charakters als Parameter übergeben
@@ -12,17 +13,22 @@ class GameController {
         this.characters.push(character);
     }
 
+    addTeam(team) {
+        this.teams.push(team);
+    }
+
     startGame() {
         this.drawGrid();
+        this.checkCurrentCharacterTeam();
     };
 
     startNewRound() {
         this.roundNumber++;
         this.currentCharacterIndex = 0; // Setze den Index des aktuellen Charakters zurück
-        this.displayCurrentCharacterStats();
         this.characters.forEach(character => {
             character.resetActionPoints();
         });
+        this.displayCurrentCharacterStats();
     }
 
     getNextCharacter() {
@@ -37,8 +43,17 @@ class GameController {
         return this.characters[this.currentCharacterIndex];
     }
 
+    getCurrentCharacterTeam() {
+        return this.characters[this.currentCharacterIndex].team;
+    }
+
     getAllCharacterCoordinates() {
-        return this.characters.map(character => character.position);
+        return this.characters.map(character => {
+            return {
+                position: character.position,
+                team: character.team
+            };
+        });
     }
 
     getTotalActionPoints() {
@@ -115,12 +130,7 @@ class GameController {
             character.position[0] = newHeroX;
             character.position[1] = newHeroY;
 
-            character.actionPoints--;
-
-            if (this.getTotalActionPoints() === 0) {
-                this.startNewRound();
-            }
-            
+            character.actionPoints--;            
             this.displayCurrentCharacterStats();
             this.field.clearCanvas();
             this.drawGrid();
@@ -156,5 +166,27 @@ class GameController {
 
         // Elemente einfügen
         document.getElementById("activeherostats").innerHTML = characterStatsHTML;
+    }
+    /* # SCHLEIFE # */
+    checkCurrentCharacterTeam() {
+        setInterval(() => {
+            const currentCharacter = this.getCurrentCharacter();
+            const totalActionPoints = this.getTotalActionPoints();
+            if (currentCharacter) {
+                //console.log(`${currentCharacter.name} ist im Team ${currentCharacter.team}.`);
+                if(currentCharacter.team == 'enemy'){
+                    currentCharacter.waitAction();
+                    console.log('Der Gegner wartet')
+                    gameController.getNextCharacter();
+                }
+            } else {
+                console.log("Kein aktueller Charakter vorhanden.");
+            }
+            /* ALLE APS Weg */
+            //console.log("Total Action Points: " + totalActionPoints);
+            if(totalActionPoints == 0){
+                this.startNewRound();
+            }
+        }, 1500); // Alle 1 Sekunde ausführen
     }
 }

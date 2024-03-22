@@ -7,16 +7,20 @@
 //NEW # Make Script extern [X]
 # Collusion [X]
 # Char Status [X]
-# Enemy [ ]
+# Enemy [X]
 //NEW # Roundbase - Listener (hat noch wer AP) [X]
 # Attack/Block [ ]
+# Karten/Felder (5x5 z.B.) [ ]
 # GameOver / Win [ ]
+# GameSaves [ ]
 # Registration [ ]
 # Login [ ]
 # Level [ ]
 # EXP [ ]
 # Future Plans [ ]
 */
+
+
 
 ?>
 <!DOCTYPE html>
