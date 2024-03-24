@@ -1,3 +1,8 @@
+/*
+/2,2/   /7,2/   /12,2/
+/2,7/   /7,7/   /12,7/
+/2,12/  /7,12/  /12,12/
+*/
 class Enemy {
     constructor(name, x, y, hp, xp, attack, defense, color, imagePath) {
         this.name = name;

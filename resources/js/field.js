@@ -1,3 +1,11 @@
+/* #DOOR POSITIONS
+ II#II
+ I///I
+ #/N/#
+ I///I
+ II#II
+*/
+
 class Field {
     constructor(xfields, yfields) {
         this.xfields = xfields;
@@ -7,30 +15,13 @@ class Field {
         this.cellWidth = this.canvas.width / xfields;
         this.cellHeight = this.canvas.height / yfields;
         this.obstacles = [];
+        this.doors = [];
+        this.blocksize = 5;
     }
 
     // Methode zum Löschen des Canvas-Bereichs
     clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    // Methode zur Überprüfung, ob das Zielfeld gültig ist -> Doppelt vorhanden kann einmal weg
-    isValidMove(newX, newY, characters) {
-        // Überprüfen, ob das Zielfeld innerhalb der Grenzen des Spielfelds liegt
-        const withinXBounds = newX >= 0 && newX < this.xfields;
-        const withinYBounds = newY >= 0 && newY < this.yfields;
-
-        if (withinXBounds && withinYBounds) {
-            // Überprüfen, ob das Zielfeld ein Hindernis ist oder von einem anderen Charakter besetzt ist
-            for (const character of characters) {
-                const [charX, charY] = character.position;
-                if (charX === newX && charY === newY) {
-                    return false; // Zielfeld ist von einem anderen Charakter besetzt
-                }
-            }
-            return true; // Zielfeld ist gültig
-        }
-        return false; // Zielfeld liegt außerhalb des Spielfelds
     }
 
     // Methode zum Hinzufügen eines Hindernisses an eine bestimmte Position
@@ -52,16 +43,9 @@ class Field {
         this.obstacles = [];
     }
 
-    buildahouse(position, doors = ["nord"]) {
-        let xtrax = 0;
-        let xtray = 0;
-        let blocksize = 5;
-
-        /* Positions:
-        /0/ /1/ /2/
-        /3/ /4/ /5/
-        /6/ /7/ /8/
-        */
+    addBlockPosition(position){
+        const blocksize = this.blocksize;
+        let xtrax, xtray;
 
         switch (position) {
             case 0:
@@ -105,7 +89,51 @@ class Field {
                 xtray = 0 * blocksize;
                 break;
         }
-        console.log(xtray);
+        return { xtrax, xtray };
+    }
+
+    addDoor(door) {
+        this.doors.push(door);
+    }
+
+    buildadoor(position,direction = "north"){
+        let blockPosition = this.addBlockPosition(position);
+        let xtrax = blockPosition.xtrax;
+        let xtray = blockPosition.xtray;
+        let door = new Door;
+        switch (direction) {
+            case "north":
+                xtrax = xtrax + 2;
+                xtray = xtray + 0;
+                break;
+            case "east":
+                xtrax = xtrax + 5;
+                xtray = xtray + 2;
+                break;
+            case "south":
+                xtrax = xtrax + 2;
+                xtray = xtray + 4;
+                break;
+            case "west":
+                xtrax = xtrax + 0;
+                xtray = xtray + 2;
+                break;
+        }
+        this.position = [xtrax, xtray];
+        this.addDoor(door);
+    }
+
+    buildahouse(position, doors = ["nord"]) {
+
+        /* Positions:
+        /0/ /1/ /2/
+        /3/ /4/ /5/
+        /6/ /7/ /8/
+        */
+       
+        let blockPosition = this.addBlockPosition(position);
+        let xtrax = blockPosition.xtrax;
+        let xtray = blockPosition.xtray;
 
         //Northwand
         this.addObstacle(0 + xtrax, 0 + xtray);

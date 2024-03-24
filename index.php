@@ -12,12 +12,14 @@
     # Karten/Felder (5x5 z.B.) [ ]
         # Bausteine [ ]
             # House with Doors [X]
+            # Hindernisse [ ]
+            # Doors [/]
     # Goals [ ]
 
 # Char
     # Player [X]
     # Char Status [X]
-    # Char Actions
+    # Char Actions [ ]
     # Char Inventory [ ]
     # EXP [ ]
         # Level [ ]
@@ -146,6 +148,7 @@
     
     
     
+    <script src="resources/js/doors.js"></script>
     <script src="resources/js/gamecontroller.js"></script>
     <script src="resources/js/character.js"></script>
     <script src="resources/js/field.js"></script>
