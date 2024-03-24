@@ -11,7 +11,7 @@
     # Grid [X]
     # Karten/Felder (5x5 z.B.) [ ]
         # Bausteine [ ]
-        # 
+            # House with Doors [X]
     # Goals [ ]
 
 # Char

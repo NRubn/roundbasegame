@@ -52,8 +52,7 @@ class Field {
         this.obstacles = [];
     }
 
-    buildahouse(position, door = ["nord"]){
-
+    buildahouse(position, doors = ["nord"]) {
         let xtrax = 0;
         let xtray = 0;
         let blocksize = 5;
@@ -63,7 +62,6 @@ class Field {
         /3/ /4/ /5/
         /6/ /7/ /8/
         */
-
 
         switch (position) {
             case 0:
@@ -106,21 +104,24 @@ class Field {
                 xtrax = 0 * blocksize;
                 xtray = 0 * blocksize;
                 break;
-          }
-            console.log(xtray);
+        }
+        console.log(xtray);
 
-        //Nordwand
+        //Northwand
         this.addObstacle(0 + xtrax, 0 + xtray);
         this.addObstacle(1 + xtrax, 0 + xtray);
-        if (notIncludes(doors, "north")) {
-            this.addObstacle(2 + xtrax, 0 + xtray); // Nord door
+        if (doors.includes("north")) {
+
+        }else{
+            this.addObstacle(2 + xtrax, 0 + xtray); // NORTHDOOR
         }
         this.addObstacle(3 + xtrax, 0 + xtray);
         this.addObstacle(4 + xtrax, 0 + xtray);
 
         //Eastwand
         this.addObstacle(4 + xtrax, 1 + xtray);
-        if (notIncludes(doors, "east")) {
+        if (doors.includes("east")) {
+        }else{
             this.addObstacle(4 + xtrax, 2 + xtray); // EASTDOOR
         }
         this.addObstacle(4 + xtrax, 3 + xtray);
@@ -128,21 +129,21 @@ class Field {
 
         //Westwand
         this.addObstacle(0 + xtrax, 1 + xtray);
-        if (notIncludes(doors, "west")) {
-            this.addObstacle(0 + xtrax, 2 + xtray); // Westdoor
+        if (doors.includes("west")) {
+        }else{
+            this.addObstacle(0 + xtrax, 2 + xtray); // WESTDOOR
         }
         this.addObstacle(0 + xtrax, 3 + xtray);
         this.addObstacle(0 + xtrax, 4 + xtray);
 
         //Southwand
         this.addObstacle(1 + xtrax, 4 + xtray);
-        if (notIncludes(doors, "south")) {
-            this.addObstacle(2 + xtrax, 4 + xtray); // Southdoor
+        if (doors.includes("south")) {
+        }else{
+            this.addObstacle(2 + xtrax, 4 + xtray); // SOUTHDOOR
         }
         this.addObstacle(3 + xtrax, 4 + xtray);
     }
 
-    notIncludes(array, element) {
-        return !array.includes(element);
-    }
+
 }

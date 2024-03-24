@@ -13,7 +13,7 @@ const gameController = new GameController(roundNumberDisplay,activeherostatsCont
 const hero1 = new Character("Green Hero 1", 3, 3, 24, 0, 5, 3,"green", "resources/char/hero.svg",'player1');
 const hero2 = new Character("Red Hero 2", 1, 1, 19, 0, 4, 4,"red", "resources/char/person-hiking-solid.svg",'player1');
 const hero3 = new Character("Blue Bob", 1, 2, 20, 0, 4, 4,"blue", "resources/char/hero.svg",'player1');
-const enemy1 = new Character("Blue Bob", 5, 5, 20, 0, 4, 4,"white", "resources/char/hero.svg",'enemy');
+const enemy1 = new Character("Blue Bob", 6, 6, 20, 0, 4, 4,"white", "resources/char/spider-solid.svg",'enemy');
 const thisplayerteam = 'player1';
 
 hero3.addAction('shoot');
@@ -22,7 +22,9 @@ gameController.addCharacter(hero2);
 gameController.addCharacter(hero3);
 gameController.addCharacter(enemy1);
 
-gameController.field.buildahouse(4);
+gameController.field.buildahouse(4,["east","west","south"]);
+gameController.field.buildahouse(7,["north","east"]);
+gameController.field.buildahouse(8,["west"]);
 
 gameController.displayCurrentCharacterStats();
 gameController.startGame();
