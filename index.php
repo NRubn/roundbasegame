@@ -1,24 +1,56 @@
 <?php
 
-/*Ziele:
-# Grid [X]
-# Player [X]
-# Roundbase Movement [X]
-//NEW # Make Script extern [X]
-# Collusion [X]
-# Char Status [X]
-# Enemy [X]
-//NEW # Roundbase - Listener (hat noch wer AP) [X]
-# Attack/Block [ ]
-# Karten/Felder (5x5 z.B.) [ ]
-# GameOver / Win [ ]
-# GameSaves [ ]
-# Registration [ ]
-# Login [ ]
-# Level [ ]
-# EXP [ ]
-# Future Plans [ ]
+/* ############# 
+
+    Goals Development
+
+############# */
+/*
+
+# Level
+    # Grid [X]
+    # Karten/Felder (5x5 z.B.) [ ]
+        # Bausteine [ ]
+        # 
+    # Goals [ ]
+
+# Char
+    # Player [X]
+    # Char Status [X]
+    # Char Actions
+    # Char Inventory [ ]
+    # EXP [ ]
+        # Level [ ]
+
+# Gameplay
+    # Roundbase Movement [X]
+    # Collusion [X]
+    # Enemy [X]
+    # Fight
+        # Attack/Block [ ]
+        # Damage
+        # Dead [ ]
+        
+    # Registration [ ]
+    # Login [ ]
+        # User [ ]
+        # Chars Collection
+    # Multiplayer
+    # Mission/Level [ ]
+        # GameOver / Win [ ]
+    # GameSaves [ ]
+
+# KI
+    # Atack [ ]
+    # Walk [ ]
+
+# Design
+    # CSV
+    # Img
+    # Colors
+
 */
+
 
 
 
