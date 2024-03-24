@@ -33,11 +33,15 @@ class GameController {
 
     getNextCharacter() {
         const nextCharacter = this.characters[this.currentCharacterIndex];
-        this.currentCharacterIndex = (this.currentCharacterIndex + 1) % this.characters.length;
+        this.currentCharacterIndex++;
+        if (this.currentCharacterIndex >= this.characters.length) {
+            this.startNewRound();
+        }
         this.displayCurrentCharacterStats();
         this.drawGrid();
         return nextCharacter;
     }
+    
 
     getCurrentCharacter() {
         return this.characters[this.currentCharacterIndex];
