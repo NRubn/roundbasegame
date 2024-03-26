@@ -9,10 +9,12 @@
 
 # Level
     # Grid [X]
-    # Karten/Felder (5x5 z.B.) [ ]
-        # Bausteine [ ]
+    # Cards/Fielsd (5x5.) [ ]
+        # Blocks [ ]
             # House with Doors [X]
-            # Hindernisse [ ]
+            # Structures [ ]
+            # Start/Camp [ ]
+            # Traps [ ]
             # Doors [/]
     # Goals [ ]
 

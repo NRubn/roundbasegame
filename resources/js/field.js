@@ -7,16 +7,17 @@
 */
 
 class Field {
-    constructor(xfields, yfields) {
+    constructor(xfields, yfields, blocksize = 5) {
         this.xfields = xfields;
         this.yfields = yfields;
         this.canvas = document.getElementById('gridCanvas');
         this.ctx = this.canvas.getContext('2d');
+        // Festlegen der Blockgröße nach der Initialisierung des Canvas-Elements
+        this.blocksize = blocksize;
         this.cellWidth = this.canvas.width / xfields;
         this.cellHeight = this.canvas.height / yfields;
         this.obstacles = [];
         this.doors = [];
-        this.blocksize = 5;
     }
 
     // Methode zum Löschen des Canvas-Bereichs
@@ -41,6 +42,43 @@ class Field {
     // Methode zum Löschen aller Hindernisse im Spielfeld
     clearObstacles() {
         this.obstacles = [];
+    }
+
+    // Draw Grid
+    drawGridFields(blockSizes) {
+        const ctx = this.ctx;
+        const cellWidth = this.cellWidth;
+        const cellHeight = this.cellHeight;
+        const blockSize = blockSizes;
+            
+        const blockSWidth = this.cellWidth * blockSize;
+        const blockSHeight = this.cellHeight * blockSize;
+
+        // Schleife für normale Felder
+        for (let x = 0; x < this.xfields; x++) {
+            for (let y = 0; y < this.yfields; y++) {
+                ctx.beginPath();
+                ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                ctx.fillStyle = "transparent";
+                ctx.strokeStyle = 'black'; // Rand schwarz
+                ctx.lineWidth = 1; // Normale Linienbreite
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+
+        // Meine Schleife
+        for (let x = 0; x < this.xfields/blockSize; x++) {
+            for (let y = 0; y < this.yfields/blockSize; y++) {
+                ctx.beginPath();
+                ctx.rect(x * blockSWidth, y * blockSHeight, blockSWidth, blockSHeight);
+                ctx.fillStyle = "transparent";
+                ctx.strokeStyle = 'black'; // Rand schwarz
+                ctx.lineWidth = 3; // Normale Linienbreite
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
     }
 
     addBlockPosition(position){

@@ -1,6 +1,6 @@
 class GameController {
     constructor(roundNumberDisplay, displayCurrentCharacter) {
-        this.field = new Field(15, 15);
+        this.field = new Field(15, 15, 5);
         this.roundNumber = 0;
         this.characters = [];
         this.teams = [];
@@ -70,19 +70,9 @@ class GameController {
         const cellHeight = this.field.cellHeight;
         const activeCharacter = this.getCurrentCharacter(); // Aktuellen Charakter abrufen
 
-        ctx.clearRect(0, 0, this.field.width, this.field.height);
-
-        for (let x = 0; x < this.field.xfields; x++) {
-            for (let y = 0; y < this.field.yfields; y++) {
-                ctx.beginPath();
-                ctx.rect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                ctx.fillStyle = 'white'; // Felder weiß füllen
-                ctx.strokeStyle = 'black'; // Rand schwarz
-                ctx.lineWidth = 1; // Normale Linienbreite
-                ctx.fill();
-                ctx.stroke();
-            }
-        }
+        this.roundNumberDisplay.textContent = this.roundNumber;
+        this.field.drawObstacles();
+        this.field.drawGridFields(5);
 
         this.characters.forEach(character => {
             ctx.fillStyle = character.color;
@@ -96,11 +86,9 @@ class GameController {
         if (activeCharacter) {
             ctx.strokeStyle = 'yellow'; // Gelber Rand
             ctx.lineWidth = 3; // Dicke des Randes
+            ctx.fillStyle = "green";
             ctx.strokeRect(activeCharacter.position[0] * cellWidth, activeCharacter.position[1] * cellHeight, cellWidth, cellHeight);
         }
-
-        this.roundNumberDisplay.textContent = this.roundNumber;
-        this.field.drawObstacles();
     }
 
     isValidMove(newX, newY) {
