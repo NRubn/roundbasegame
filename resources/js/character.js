@@ -52,7 +52,7 @@ class Character {
 
     waitAction() {
         if (this.actionPoints > 0) {
-            this.actionPoints = 0;
+            this.actionPoints = this.actionPoints-1;
         }
     }    
 }

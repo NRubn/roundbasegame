@@ -158,6 +158,7 @@ class GameController {
 
         // Elemente einfügen
         document.getElementById("activeherostats").innerHTML = characterStatsHTML;
+        this.addButtonListeners();
     }
     /* # SCHLEIFE # */
     checkCurrentCharacterTeam() {
@@ -180,5 +181,20 @@ class GameController {
                 this.startNewRound();
             }
         }, 1500); // Alle 1 Sekunde ausführen
+    }
+
+    addButtonListeners() {
+        const buttons = document.querySelectorAll('#actions button');
+        const gameController = this;
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                //console.log(button.textContent);
+                if(button.textContent === "wait") {
+                    const currentCharacter = gameController.getCurrentCharacter();
+                    currentCharacter.waitAction();
+                    gameController.getNextCharacter();
+                }
+            });
+        });
     }
 }
