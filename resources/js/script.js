@@ -26,9 +26,6 @@ gameController.field.buildahouse(4,["east","west","south"]);
 gameController.field.buildahouse(7,["north","east"]);
 gameController.field.buildahouse(8,["west"]);
 
-gameController.displayCurrentCharacterStats();
-gameController.startGame();
-
 // Funktion zum Zeichnen des Gridmusters und der Charaktere
 function drawGrid() {
     gameController.drawGrid();
@@ -99,3 +96,18 @@ endRoundButton.addEventListener('click', function() {
 });
 
 gameController.drawGrid(); // Zeichne das Gridmuster und den Hero
+
+/* Not Yet: TO DO: Check of Mouseover work
+canvas.addEventListener('mousemove', function(event) {
+    const rect = canvas.getBoundingClientRect(); // Position des Canvas im Browserfenster abrufen
+    const mouseX = event.clientX - rect.left; // X-Koordinate der Maus relativ zum Canvas
+    const mouseY = event.clientY - rect.top; // Y-Koordinate der Maus relativ zum Canvas
+
+    // Berechnung der Rasterkoordinaten
+    const gridX = Math.floor(mouseX / cellWidth);
+    const gridY = Math.floor(mouseY / cellHeight);
+
+    // Jetzt haben Sie gridX und gridY, um zu überprüfen, über welches Rasterfeld die Maus schwebt
+    console.log("Mouse is hovering over grid cell:", gridX, gridY);
+});
+*/

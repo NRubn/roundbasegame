@@ -8,7 +8,7 @@ class Character {
         this.defense = defense; // Verteidigungswert
         this.actionPoints = 2;
         this.color = color;
-        this.actions = ['move', 'attack', 'wait'];
+        this.actions = ['move', 'wait'];
         this.imagePath = imagePath; // Bildpfad des Charakter
         this.heroImg = new Image();
         this.heroImg.src = imagePath; // Laden Sie das Bild des Charakters
