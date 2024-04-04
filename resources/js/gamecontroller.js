@@ -1,5 +1,5 @@
 class GameController {
-    constructor(roundNumberDisplay, displayCurrentCharacter) {
+    constructor(roundNumberDisplay, displayCurrentCharacter, gamename = "start") {
         this.field = new Field(15, 15, 5);
         this.roundNumber = 0;
         this.characters = [];
@@ -7,6 +7,7 @@ class GameController {
         this.currentCharacterIndex = 0;
         this.roundNumberDisplay = roundNumberDisplay; // Rundenanzeige als Parameter übergeben
         this.displayCurrentCharacter = displayCurrentCharacter; // Methode zur Anzeige des aktuellen Charakters als Parameter übergeben
+        this.gamename = gamename;
     }
 
     addCharacter(character) {
@@ -196,5 +197,30 @@ class GameController {
                 }
             });
         });
+    }
+
+    saveGameStatus() {
+        console.log("save");
+        const gameData = {
+            gamename: this.gamename,
+            roundNumber: this.roundNumber,
+            characters: this.characters,
+            field: this.field,
+            // Weitere relevante Daten des Spiels hinzufügen
+        };
+
+        const jsonData = JSON.stringify(gameData);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'game/saves/saveGameStatus.php'); // Pfad zum PHP-Skript
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('Spielstatus erfolgreich gespeichert.');
+            } else {
+                console.error('Fehler beim Speichern des Spielstatus.');
+            }
+        };
+        xhr.send(jsonData);
     }
 }
