@@ -14,6 +14,19 @@ class GameController {
         this.characters.push(character);
     }
 
+    setCharacters(characters) {
+        this.characters = [];
+        characters.forEach(characterData => {
+            const { name, position, hp, xp, attack, defense, actionPoints, color, actions, imagePath, heroImg, team } = characterData;
+            const [x, y] = position;
+            const character = new Character(name, x, y, hp, xp, attack, defense, color, imagePath, team);
+            character.actionPoints = actionPoints; // Setzen der Aktionspunkte
+            character.actions = actions; // Setzen der Aktionen
+            character.setImage(imagePath); // Setzen des Bilds
+            this.addCharacter(character); // Hinzufügen des erstellten Charakters zur Liste
+        });
+    }
+
     addTeam(team) {
         this.teams.push(team);
     }
@@ -202,11 +215,14 @@ class GameController {
     saveGameStatus() {
         console.log("save");
         const gameData = {
-            gamename: this.gamename,
+            // Weitere relevante Daten des Spiels hinzufügen
+            field: this.field,
             roundNumber: this.roundNumber,
             characters: this.characters,
-            field: this.field,
-            // Weitere relevante Daten des Spiels hinzufügen
+            teams: this.teams,
+            currentCharacterIndex: this.currentCharacterIndex,
+            roundNumberDisplay: this.roundNumberDisplay,
+            gamename: this.gamename,
         };
 
         const jsonData = JSON.stringify(gameData);
@@ -223,4 +239,39 @@ class GameController {
         };
         xhr.send(jsonData);
     }
+
+    loadGameStatus(gamename = this.gamename) {
+        const filename = `game/saves/save-${gamename}.json`;
+    
+        // Kontext des GameControllers speichern
+        const gameController = this;
+    
+        // AJAX-Anforderung zum Laden der Spielstatusdaten
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', filename, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Spielstatus erfolgreich geladen
+                    const gameStatus = JSON.parse(xhr.responseText);
+                    console.log('Spielstatus geladen:', gameStatus);
+                    console.log(gameStatus.field.obstacles);
+                    console.log(gameStatus.field.doors);
+                    // Hier kannst du die geladenen Daten weiterverarbeiten
+                    gameController.field.setObstaclesAndDoors(gameStatus.field.obstacles,gameStatus.field.doors);
+                    gameController.roundNumber = gameStatus.roundNumber;
+                    gameController.setCharacters(gameStatus.characters);
+                    gameController.teams = gameStatus.teams;
+                    gameController.currentCharacterIndex = gameStatus.currentCharacterIndex;
+                    //gameController.roundNumberDisplay = gameStatus.roundNumberDisplay;
+                    gameController.gamename = gameStatus.gamename;
+                } else {
+                    // Fehler beim Laden der Spielstatusdaten
+                    console.error('Fehler beim Laden des Spielstatus:', xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
+
 }

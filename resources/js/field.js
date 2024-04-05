@@ -30,6 +30,19 @@ class Field {
         this.obstacles.push([x, y]);
     }
 
+    setObstaclesAndDoors(obstacles, doors) {
+        this.clearObstacles();
+        this.clearDoors();
+
+        obstacles.forEach(([x, y]) => {
+            this.addObstacle(x, y);
+        });
+    
+        doors.forEach(({ position, direction }) => {
+            this.buildadoor(position, direction);
+        });
+    }    
+
     // Methode zum Zeichnen aller Hindernisse im Spielfeld
     drawObstacles() {
         this.obstacles.forEach(obstacle => {
@@ -42,6 +55,10 @@ class Field {
     // Methode zum Löschen aller Hindernisse im Spielfeld
     clearObstacles() {
         this.obstacles = [];
+    }
+
+    clearDoors() {
+        this.doors = [];
     }
 
     // Draw Grid

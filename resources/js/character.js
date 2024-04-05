@@ -15,6 +15,11 @@ class Character {
         this.team = team;
     }
 
+    setImage(imagePath){
+        this.imagePath = imagePath; // Bildpfad des Charakter
+        this.heroImg = new Image();
+        this.heroImg.src = imagePath;
+    }
     // Methode zum Zurücksetzen der Aktionspunkte des Charakters
     resetActionPoints() {
         this.actionPoints = 2;

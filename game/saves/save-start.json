@@ -1,89 +1,4 @@
 {
-    "gamename": "start",
-    "roundNumber": 0,
-    "characters": [
-        {
-            "name": "Green Hero 1",
-            "position": [
-                4,
-                2
-            ],
-            "hp": 24,
-            "xp": 0,
-            "attack": 5,
-            "defense": 3,
-            "actionPoints": 0,
-            "color": "green",
-            "actions": [
-                "move",
-                "wait"
-            ],
-            "imagePath": "resources\/char\/hero.svg",
-            "heroImg": {},
-            "team": "player1"
-        },
-        {
-            "name": "Red Hero 2",
-            "position": [
-                1,
-                1
-            ],
-            "hp": 19,
-            "xp": 0,
-            "attack": 4,
-            "defense": 4,
-            "actionPoints": 0,
-            "color": "red",
-            "actions": [
-                "move",
-                "wait"
-            ],
-            "imagePath": "resources\/char\/person-hiking-solid.svg",
-            "heroImg": {},
-            "team": "player1"
-        },
-        {
-            "name": "Blue Bob",
-            "position": [
-                2,
-                2
-            ],
-            "hp": 20,
-            "xp": 0,
-            "attack": 4,
-            "defense": 4,
-            "actionPoints": 1,
-            "color": "blue",
-            "actions": [
-                "move",
-                "wait",
-                "shoot"
-            ],
-            "imagePath": "resources\/char\/hero.svg",
-            "heroImg": {},
-            "team": "player1"
-        },
-        {
-            "name": "Blue Bob",
-            "position": [
-                7,
-                7
-            ],
-            "hp": 20,
-            "xp": 0,
-            "attack": 4,
-            "defense": 4,
-            "actionPoints": 2,
-            "color": "white",
-            "actions": [
-                "move",
-                "wait"
-            ],
-            "imagePath": "resources\/char\/spider-solid.svg",
-            "heroImg": {},
-            "team": "enemy"
-        }
-    ],
     "field": {
         "xfields": 15,
         "yfields": 15,
@@ -94,7 +9,7 @@
         "cellHeight": 33.333333333333336,
         "obstacles": [
             [
-                5,
+                0,
                 5
             ],
             [
@@ -263,5 +178,93 @@
             ]
         ],
         "doors": []
-    }
+    },
+    "roundNumber": 1,
+    "characters": [
+        {
+            "name": "Green Hero 1",
+            "position": [
+                5,
+                3
+            ],
+            "hp": 24,
+            "xp": 0,
+            "attack": 5,
+            "defense": 3,
+            "actionPoints": 2,
+            "color": "green",
+            "actions": [
+                "move",
+                "wait"
+            ],
+            "imagePath": "resources\/char\/hero.svg",
+            "heroImg": {},
+            "team": "player1"
+        },
+        {
+            "name": "Red Hero 2",
+            "position": [
+                3,
+                1
+            ],
+            "hp": 19,
+            "xp": 0,
+            "attack": 4,
+            "defense": 4,
+            "actionPoints": 2,
+            "color": "red",
+            "actions": [
+                "move",
+                "wait"
+            ],
+            "imagePath": "resources\/char\/person-hiking-solid.svg",
+            "heroImg": {},
+            "team": "player1"
+        },
+        {
+            "name": "Blue Bob",
+            "position": [
+                3,
+                2
+            ],
+            "hp": 20,
+            "xp": 0,
+            "attack": 4,
+            "defense": 4,
+            "actionPoints": 2,
+            "color": "blue",
+            "actions": [
+                "move",
+                "wait",
+                "shoot"
+            ],
+            "imagePath": "resources\/char\/hero.svg",
+            "heroImg": {},
+            "team": "player1"
+        },
+        {
+            "name": "Spider",
+            "position": [
+                7,
+                7
+            ],
+            "hp": 20,
+            "xp": 0,
+            "attack": 4,
+            "defense": 4,
+            "actionPoints": 2,
+            "color": "white",
+            "actions": [
+                "move",
+                "wait"
+            ],
+            "imagePath": "resources\/char\/spider-solid.svg",
+            "heroImg": {},
+            "team": "enemy"
+        }
+    ],
+    "teams": [],
+    "currentCharacterIndex": 0,
+    "roundNumberDisplay": {},
+    "gamename": "start"
 }
