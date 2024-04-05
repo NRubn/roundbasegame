@@ -11,7 +11,7 @@
     # Cards/Fielsd (5x5.) [ ]
         # Blocks [ ]
             # House with Doors [X]
-            # Structures [ ]
+            # Structures [1]
             # Start/Camp [ ]
             # Traps [ ]
             # Doors [/]
@@ -41,7 +41,7 @@
     # Multiplayer
     # Mission/Level [ ]
         # GameOver / Win [ ]
-    # GameSaves [ ]
+    # GameSaves [X]
 
 # KI
     # Atack [ ]

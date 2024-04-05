@@ -9,7 +9,7 @@
         "cellHeight": 33.333333333333336,
         "obstacles": [
             [
-                0,
+                5,
                 5
             ],
             [
@@ -179,19 +179,19 @@
         ],
         "doors": []
     },
-    "roundNumber": 1,
+    "roundNumber": 0,
     "characters": [
         {
             "name": "Green Hero 1",
             "position": [
-                5,
-                3
+                2,
+                2
             ],
             "hp": 24,
             "xp": 0,
             "attack": 5,
             "defense": 3,
-            "actionPoints": 2,
+            "actionPoints": 0,
             "color": "green",
             "actions": [
                 "move",
@@ -204,7 +204,7 @@
         {
             "name": "Red Hero 2",
             "position": [
-                3,
+                1,
                 1
             ],
             "hp": 19,
@@ -224,7 +224,7 @@
         {
             "name": "Blue Bob",
             "position": [
-                3,
+                1,
                 2
             ],
             "hp": 20,
@@ -264,7 +264,7 @@
         }
     ],
     "teams": [],
-    "currentCharacterIndex": 0,
+    "currentCharacterIndex": 1,
     "roundNumberDisplay": {},
     "gamename": "start"
 }
