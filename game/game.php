@@ -3,7 +3,7 @@
 ?>
 
 <div id="game-container">
-    <h1>Mein Browsergame</h1>
+    <h2>Mein Browsergame</h2>
     <div id="game">
         <div id="field">
         <canvas id="gridCanvas" width="500" height="500"></canvas>
