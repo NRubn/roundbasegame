@@ -55,9 +55,11 @@
 */
 
 require_once "logins.php";
+$role = 'visitor';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {   
     $login = false;
+    
     // Benutzername und Passwort aus dem POST erhalten
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -67,12 +69,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             // Anmeldung erfolgreich
             echo "Anmeldung erfolgreich!";
             $login = true;
+            $role = $user["role"];
             break;
         }
     }
 }else{
     $login = false;
 }
+echo "Role:";
+echo $role;
 
 ?>
 <!DOCTYPE html>

@@ -1,3 +1,4 @@
+<p>Dies ist eine Vorab-Demo Version</p>
 <form action="#" method="post">
     <h2>Anmeldung</h2>
     <input type="text" name="username" placeholder="Benutzername" required>

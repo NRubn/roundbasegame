@@ -20,10 +20,10 @@ class GameController {
             const { name, position, hp, xp, attack, defense, actionPoints, color, actions, imagePath, heroImg, team } = characterData;
             const [x, y] = position;
             const character = new Character(name, x, y, hp, xp, attack, defense, color, imagePath, team);
-            character.actionPoints = actionPoints; // Setzen der Aktionspunkte
-            character.actions = actions; // Setzen der Aktionen
-            character.setImage(imagePath); // Setzen des Bilds
-            this.addCharacter(character); // Hinzufügen des erstellten Charakters zur Liste
+            character.actionPoints = actionPoints;
+            character.actions = actions;
+            character.setImage(imagePath);
+            this.addCharacter(character);
         });
     }
 
@@ -241,7 +241,7 @@ class GameController {
     }
 
     loadGameStatus(gamename = this.gamename) {
-        const filename = `game/saves/save-${gamename}.json`;
+        const filename = `game/saves/savefiles/save-${gamename}.json`;
     
         // Kontext des GameControllers speichern
         const gameController = this;

@@ -8,7 +8,8 @@ if (!file_exists($config_file)) {
         array(
             "username" => "admin",
             "email" => "admin@example.com",
-            "password" => "admin"
+            "password" => "admin",
+            "role" => "admin"
         )
     );
     // Erstelle in der Confog.php deinen Admin-Benutzer
